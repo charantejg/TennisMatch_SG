@@ -19,14 +19,33 @@ namespace TennisMatch.Core
        }
 
        public string GameScoreBoard()
-        {
-            throw new NotImplementedException();
-        }
+       {
+           return $"{_playerScoreA.Player.Name}:{_playerScoreA.Score.ToString()}," +
+                  $"{_playerScoreB.Player.Name}:{_playerScoreB.Score.ToString()}";
+       }
 
         public bool IsGameCompleted { get; }
-        public void UpdatePoints(IPlayer player)
+        public void CurrentPointWinner(IPlayer player)
         {
-            throw new NotImplementedException();
+            if (_playerScoreA.Player == player)
+            {
+                CalculateNewPoints(_playerScoreA, _playerScoreB);
+            }
+            else if(_playerScoreB.Player == player)
+            {
+                CalculateNewPoints(_playerScoreB, _playerScoreA);
+            }
+
+        }
+
+        private void CalculateNewPoints(IPlayerGameScore winner, IPlayerGameScore looser)
+        {
+            if (winner.HasScoreLessThanForty && winner.HasScoreLessThanForty)
+            {
+                winner.Increment();
+                return;
+            }
+            winner.Increment();
         }
 
         public string GetPlayerScore(IPlayer player)

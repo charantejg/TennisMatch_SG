@@ -4,7 +4,7 @@
     {
         string GameScoreBoard();
         bool IsGameCompleted { get; }
-        void UpdatePoints(IPlayer player);
+        void CurrentPointWinner(IPlayer player);
         string GetPlayerScore(IPlayer player);
     }
 
