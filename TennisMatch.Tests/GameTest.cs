@@ -70,6 +70,48 @@ namespace TennisMatch.Tests
 
         }
 
+        [Test]
+        public void DeuceTest()
+        {
+            AutoIncrement(3, _playerA);
+            AutoIncrement(3, _playerB);
+
+            ResultShouldBe($"{_playerA.Name}:Deuce,{_playerB.Name}:Deuce");
+           
+        }
+
+        [Test]
+        public void DeuceToAdvantage_Test()
+        {
+            AutoIncrement(3, _playerA);
+            AutoIncrement(3, _playerB);
+            AutoIncrement(1, _playerA);
+            ResultShouldBe($"{_playerA.Name}:Advantage,{_playerB.Name}:40");
+
+        }
+        [Test]
+        public void AdvantageWin_Test()
+        {
+            AutoIncrement(3, _playerA);
+            AutoIncrement(3, _playerB);
+            AutoIncrement(1, _playerA);
+            AutoIncrement(1, _playerA);
+            ResultShouldBe($"{_playerA.Name} wins the game point");
+
+        }
+
+        [Test]
+        public void AdvantageFail_Test()
+        {
+            AutoIncrement(3, _playerA);
+            AutoIncrement(3, _playerB);
+            AutoIncrement(1, _playerA);
+            AutoIncrement(1, _playerB);
+            ResultShouldBe($"{_playerA.Name}:Deuce,{_playerB.Name}:Deuce");
+
+        }
+
+
         private void ResultShouldBe(string expected)
         {
             // checking if the user expected result matching with the game scoreboard
