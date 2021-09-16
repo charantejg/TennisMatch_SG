@@ -9,13 +9,13 @@ namespace TennisMatch.Core
 {
    public class Game: IGame
    {
-       private readonly IPlayerPoint _playerScoreA;
-       private readonly IPlayerPoint _playerScoreB;
+       private readonly IPlayerPoint _playerPointsA;
+       private readonly IPlayerPoint _playerPointsB;
 
        public Game(IPlayer playerA, IPlayer playerB)
        {
-           _playerScoreA = new PlayerPoint(playerA);
-           _playerScoreB = new PlayerPoint(playerB);
+           _playerPointsA = new PlayerPoint(playerA);
+           _playerPointsB = new PlayerPoint(playerB);
        }
 
        public string GameScoreBoard()
@@ -26,9 +26,8 @@ namespace TennisMatch.Core
            }
 
            
-           return $"{_playerScoreA.Player.Name}:{_playerScoreA.Point.ToString()}," +
-                  $"{_playerScoreB.Player.Name}:{_playerScoreB.Point.ToString()}";
-
+           return $"{_playerPointsA.Player.Name}:{_playerPointsA.Point.ToString()}," +
+                  $"{_playerPointsB.Player.Name}:{_playerPointsB.Point.ToString()}";
 
        }
 
@@ -38,27 +37,27 @@ namespace TennisMatch.Core
         {
             get
             {
-                if (_playerScoreA.IsWinner)
-                    return _playerScoreA.Player;
-                if (_playerScoreB.IsWinner)
-                    return _playerScoreB.Player;
+                if (_playerPointsA.IsWinner)
+                    return _playerPointsA.Player;
+                if (_playerPointsB.IsWinner)
+                    return _playerPointsB.Player;
                 return null;
             }
         }
         public void CurrentPointWinner(IPlayer player)
         {
-            if (_playerScoreA.Player == player)
+            if (_playerPointsA.Player == player)
             {
-                CalculateNewPoints(_playerScoreA, _playerScoreB);
+                CalculateNewPoints(_playerPointsA, _playerPointsB);
             }
-            else if(_playerScoreB.Player == player)
+            else if(_playerPointsB.Player == player)
             {
-                CalculateNewPoints(_playerScoreB, _playerScoreA);
+                CalculateNewPoints(_playerPointsB, _playerPointsA);
             }
 
         }
         /// <summary>
-        /// Main logical block for incrementing the game score
+        /// Main logical block for incrementing the game points
         /// </summary>
         /// <param name="playerWin">The point scored player</param>
         /// <param name="playerLoss">The player who did not score any point</param>
@@ -114,9 +113,15 @@ namespace TennisMatch.Core
 
         }
 
-        public string GetPlayerScore(IPlayer player)
+        public string GetPlayerGamePoints(IPlayer player)
         {
-            throw new NotImplementedException();
+            if (_playerPointsA.Player == player)
+                return _playerPointsA.Point.ToString();
+            if(_playerPointsB.Player == player)
+                return _playerPointsB.Point.ToString();
+
+            return null;
+            
         }
     }
 }
