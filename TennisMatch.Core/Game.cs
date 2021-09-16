@@ -54,22 +54,29 @@ namespace TennisMatch.Core
 
         }
 
-        private void CalculateNewPoints(IPlayerGameScore winner, IPlayerGameScore looser)
+        private void CalculateNewPoints(IPlayerGameScore pointWinner, IPlayerGameScore pointLooser)
         {
-            if (winner.HasScoreLessThanForty && winner.HasScoreLessThanForty)
+            if (pointWinner.HasScoreLessThanForty && pointWinner.HasScoreLessThanForty)
             {
-                winner.Increment();
+                pointWinner.Increment();
                 return;
             }
-           
+          
 
-            if (winner.HasScoreForty)
+            if (pointWinner.HasScoreForty && pointLooser.HasScoreForty)
             {
-                winner.Win();
+                pointWinner.Deuce();
+                pointLooser.Deuce();
                 return;
             }
 
-            winner.Increment();
+            if (pointWinner.HasScoreForty)
+            {
+                pointWinner.Win();
+                return;
+            }
+
+            pointWinner.Increment();
         }
 
         public string GetPlayerScore(IPlayer player)

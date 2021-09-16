@@ -55,6 +55,16 @@ namespace TennisMatch.Core
         {
             Score = new ScorePoint(40);
         }
+
+        public void Deuce()
+        {
+            Score = new ScoreDeuce();
+        }
+
+        public void Advantage()
+        {
+            Score = new ScoreAdvantage();
+        }
     }
 
    

@@ -70,6 +70,16 @@ namespace TennisMatch.Tests
 
         }
 
+        [Test]
+        public void DeuceTest()
+        {
+            AutoIncrement(3, _playerA);
+            AutoIncrement(3, _playerB);
+            ResultShouldBe($"{_playerA.Name}:40,{_playerB.Name}:40");
+           
+        }
+
+
         private void ResultShouldBe(string expected)
         {
             // checking if the user expected result matching with the game scoreboard

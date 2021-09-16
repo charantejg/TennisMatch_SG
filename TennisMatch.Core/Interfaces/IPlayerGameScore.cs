@@ -11,6 +11,8 @@
         void Increment();
         void Win();
         void Forty();
+        void Deuce();
+        void Advantage();
 
     }
 }
