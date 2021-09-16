@@ -7,14 +7,14 @@ using TennisMatch.Core.Interfaces;
 
 namespace TennisMatch.Core
 {
-    public class Score: IScore
+    public class ScoreWin : IScore
     {
-        public Score(int newPoint = 0)
+        public ScoreWin()
         {
-            PointValue = newPoint;
+            PointValue = 1;
         }
 
-        public int PointValue { get; }
+        public int PointValue { get; set; }
 
         public override string ToString()
         {

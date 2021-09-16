@@ -33,12 +33,56 @@ namespace TennisMatch.Tests
             _game.CurrentPointWinner(_playerA);
             ResultShouldBe($"{_playerA.Name}:15,{_playerB.Name}:0");
         }
-        
+
+        [Test]
+        public void Fifteen_Each()
+        {
+            _game.CurrentPointWinner(_playerA);
+            _game.CurrentPointWinner(_playerB);
+            ResultShouldBe($"{_playerA.Name}:15,{_playerB.Name}:15");
+        }
+
+        [Test]
+        public void FirstPlayerWinAllPoints_Test()
+        {
+           AutoIncrement(4,_playerA);
+           ResultShouldBe($"{_playerA.Name} wins the game point");
+           Assert.True(_game.IsGameCompleted);
+
+        }
+
+        [Test]
+        public void SecondPlayerWinAllPoints_Test()
+        {
+            AutoIncrement(4, _playerB);
+            ResultShouldBe($"{_playerB.Name} wins the game point");
+            Assert.True(_game.IsGameCompleted);
+
+        }
+
+        [Test]
+        public void FirstPlayerWinWithMorePoints_Test()
+        {
+            AutoIncrement(4, _playerA);
+            AutoIncrement(2, _playerB);
+            ResultShouldBe($"{_playerA.Name} wins the game point");
+            Assert.True(_game.IsGameCompleted);
+
+        }
+
         private void ResultShouldBe(string expected)
         {
             // checking if the user expected result matching with the game scoreboard
             
             Assert.AreEqual(expected, _game.GameScoreBoard());
+        }
+
+        private void AutoIncrement(int times, IPlayer player)
+        {
+            for (var i = 0; i < times; i++)
+            {
+                _game.CurrentPointWinner(player);
+            }
         }
     }
 }
