@@ -9,6 +9,7 @@
 
         bool SetEnd { get; }
         IPlayer Winner { get;  }
+        bool IsTieBreaker { get; set; }
 
     }
 }

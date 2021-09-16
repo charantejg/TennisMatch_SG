@@ -12,10 +12,12 @@ namespace TennisMatch.Core
         public bool GameEnd { get; }
         public bool SetEnd => Winner != null;
         public IPlayer Winner { get; set; }
+        public bool IsTieBreaker { get; set; }
 
         private IGame _game;
         private readonly IPlayerSet _playerSetA;
         private readonly IPlayerSet _playerSetB;
+        private ITieBreaker _tieBreaker;
 
         public Set(IPlayer playerA, IPlayer playerB)
         {
@@ -77,6 +79,15 @@ namespace TennisMatch.Core
         /// <param name="playerSetLooser"></param>
         private void CalculateNewPoints(IPlayerSet playerSetWinner, IPlayerSet playerSetLooser)
         {
+            if (IsTieBreaker)
+            {
+                if (_tieBreaker.Calculate(playerSetWinner, playerSetLooser))
+                {
+                    Winner = playerSetWinner.Player;
+                    return;
+                }
+            }
+
             _game.CurrentPointWinner(playerSetWinner.Player);
 
             if (!_game.IsGameCompleted) return;
@@ -91,6 +102,12 @@ namespace TennisMatch.Core
                 return;
             }
 
+            if (playerSetWinner.Score == 6 && playerSetLooser.Score == 6)
+            {
+                IsTieBreaker = true;
+                
+                _tieBreaker = new TieBreaker();
+            }
             CreateGame();
 
         }

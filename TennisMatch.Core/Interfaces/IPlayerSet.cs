@@ -5,6 +5,7 @@
         IPlayer Player { get; set; }
         byte Score { get; set; }
 
+        byte TieBreakerScore { get; set; }
       
     }
 }

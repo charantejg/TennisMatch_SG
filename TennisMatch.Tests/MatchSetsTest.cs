@@ -66,6 +66,24 @@ namespace TennisMatch.Tests
 
         }
 
+        [Test]
+        public void FirstPlayerWins_TieBreaker_Test()
+        {
+            // 5 sets
+            AutoIncrementSet(20, _playerA);
+            // 5 sets
+            AutoIncrementSet(20, _playerB);
+            // 1 set
+            AutoIncrementSet(4, _playerA);
+            // 1 set
+            AutoIncrementSet(4, _playerB);
+            // 1 set tie breaker won by player A 
+            AutoIncrementSet(4, _playerA);
+
+            var currentGameScore = _set.DisplayScoreBoard(_playerA).Split(",");
+            Assert.AreEqual($"{currentGameScore[0]},7", $"{currentGameScore[0]},{currentGameScore[1]}");
+
+        }
 
         private void AutoIncrementSet(int times, IPlayer player)
         {

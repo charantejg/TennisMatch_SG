@@ -11,6 +11,9 @@ namespace TennisMatch.Core
     {
         public IPlayer Player { get; set; }
         public byte Score { get; set; }
+        public byte TieBreakerScore { get; set; }
+        
+    
 
         public PlayerSet(IPlayer player)
         {
