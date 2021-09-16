@@ -2,10 +2,10 @@
 
 namespace TennisMatch.Core
 {
-    public struct ScoreAdvantage: IScore
+    public struct PointAdvantage: IPoint
     {
-        //Assume the advantage score is 41, in reality there is no 41 in tennis.
-        public int PointValue => 41;
+        //Assume the advantage score is 42, in reality there is no 42 in tennis.
+        public int PointValue => 42;
 
         public override string ToString()
         {

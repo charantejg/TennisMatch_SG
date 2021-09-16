@@ -1,6 +1,6 @@
 ﻿namespace TennisMatch.Core.Interfaces
 {
-    public interface IScore
+    public interface IPoint
     {
         int PointValue { get; }
         string ToString();

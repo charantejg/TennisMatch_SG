@@ -9,13 +9,13 @@ namespace TennisMatch.Core
 {
    public class Game: IGame
    {
-       private readonly IPlayerGameScore _playerScoreA;
-       private readonly IPlayerGameScore _playerScoreB;
+       private readonly IPlayerPoint _playerScoreA;
+       private readonly IPlayerPoint _playerScoreB;
 
        public Game(IPlayer playerA, IPlayer playerB)
        {
-           _playerScoreA = new PlayerGameScore(playerA);
-           _playerScoreB = new PlayerGameScore(playerB);
+           _playerScoreA = new PlayerPoint(playerA);
+           _playerScoreB = new PlayerPoint(playerB);
        }
 
        public string GameScoreBoard()
@@ -24,8 +24,12 @@ namespace TennisMatch.Core
            {
                return $"{Winner.Name} wins the game point";
            }
-           return $"{_playerScoreA.Player.Name}:{_playerScoreA.Score.ToString()}," +
-                  $"{_playerScoreB.Player.Name}:{_playerScoreB.Score.ToString()}";
+
+           
+           return $"{_playerScoreA.Player.Name}:{_playerScoreA.Point.ToString()}," +
+                  $"{_playerScoreB.Player.Name}:{_playerScoreB.Point.ToString()}";
+
+
        }
 
        public bool IsGameCompleted => Winner != null;
@@ -53,30 +57,61 @@ namespace TennisMatch.Core
             }
 
         }
-
-        private void CalculateNewPoints(IPlayerGameScore pointWinner, IPlayerGameScore pointLooser)
+        /// <summary>
+        /// Main logical block for incrementing the game score
+        /// </summary>
+        /// <param name="playerWin">The point scored player</param>
+        /// <param name="playerLoss">The player who did not score any point</param>
+        private void CalculateNewPoints(IPlayerPoint playerWin, IPlayerPoint playerLoss)
         {
-            if (pointWinner.HasScoreLessThanForty && pointWinner.HasScoreLessThanForty)
+            //If the player who has the ADVANTAGE win the  point, he win the game
+            if (playerWin.IsAdvantage)
             {
-                pointWinner.Increment();
-                return;
-            }
-          
-
-            if (pointWinner.HasScoreForty && pointLooser.HasScoreForty)
-            {
-                pointWinner.Deuce();
-                pointLooser.Deuce();
+                playerWin.Win();
                 return;
             }
 
-            if (pointWinner.HasScoreForty)
+            //If the player who has the ADVANTAGE loose the point, the score is DEUCE
+            if (playerLoss.IsAdvantage)
             {
-                pointWinner.Win();
+                playerLoss.Deuce();
+                playerWin.Deuce();
                 return;
             }
 
-            pointWinner.Increment();
+            //If the score is DEUCE , the player who  win the point take the ADVANTAGE
+            if (playerWin.IsDeuce)
+            {
+
+                playerWin.Advantage();
+                playerLoss.Forty();
+                return;
+            }
+
+            if (playerWin.HasScoreLessThanForty && playerLoss.HasScoreLessThanForty)
+            {
+                playerWin.Increment();
+               return;
+            }
+
+            
+            if (playerWin.HasScoreForty)
+            {
+                playerWin.Win();
+                return;
+            }
+            
+            // used to increment the playerB
+            playerWin.Increment();
+
+            //If the 2 players reach the score 40, the DEUCE rule is activated
+            if (playerWin.HasScoreForty && playerLoss.HasScoreForty)
+            {
+                playerWin.Deuce();
+                playerLoss.Deuce();
+                return;
+            }
+
         }
 
         public string GetPlayerScore(IPlayer player)

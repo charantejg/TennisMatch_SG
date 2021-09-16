@@ -7,9 +7,9 @@ using TennisMatch.Core.Interfaces;
 
 namespace TennisMatch.Core
 {
-    public struct ScorePoint: IScore
+    public struct Point: IPoint
     {
-        public ScorePoint(int newPoint = 0)
+        public Point(int newPoint = 0)
         {
             PointValue = newPoint;
         }
