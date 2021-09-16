@@ -31,6 +31,7 @@ namespace TennisMatch.Tests
            
             var currentGameScore = _set.DisplayScoreBoard(_playerA).Split(",");
             Assert.AreEqual($"{currentGameScore[0]},6", $"{currentGameScore[0]},{currentGameScore[1]}");
+            Assert.True(_set.SetEnd);
         }
 
 
@@ -41,6 +42,7 @@ namespace TennisMatch.Tests
 
             var currentGameScore = _set.DisplayScoreBoard(_playerB).Split(",");
             Assert.AreEqual($"{currentGameScore[0]},6", $"{currentGameScore[0]},{currentGameScore[1]}");
+            Assert.True(_set.SetEnd);
         }
 
 
@@ -60,6 +62,7 @@ namespace TennisMatch.Tests
             currentGameScore = _set.DisplayScoreBoard(_playerB).Split(",");
             Assert.AreEqual($"{currentGameScore[0]},4", $"{currentGameScore[0]},{currentGameScore[1]}");
 
+            Assert.True(_set.SetEnd);
 
         }
 
