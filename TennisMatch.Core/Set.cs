@@ -55,7 +55,7 @@ namespace TennisMatch.Core
         /// <param name="player"></param>
         public void CurrentPointWinner(IPlayer player)
         {
-            if(GameEnd)
+            if(SetEnd)
                 return;
             
             if (_playerSetA.Player == player)
